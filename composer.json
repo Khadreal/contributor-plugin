@@ -1,0 +1,23 @@
+{
+  "name": "khadreal/contributor",
+  "description": "An assessment for rtcamp, building a contributor plugin",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Opeyemi Ibrahim",
+      "email": "opeyemi.khadri@gmail.com"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.0"
+  },
+  "scripts": {
+    "phpcs": "phpcs --basepath=."
+  }
+}

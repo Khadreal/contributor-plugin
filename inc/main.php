@@ -4,6 +4,10 @@ use Contributor\Loader;
 
 defined( 'ABSPATH' ) || exit;
 
+if ( file_exists( RT_CONTRIBUTOR_PATH . 'vendor/autoload.php' ) ) {
+    require_once RT_CONTRIBUTOR_PATH . 'vendor/autoload.php';
+}
+
 /**
  * Initialisation.
  *

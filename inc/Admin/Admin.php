@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Contributor\Inc\Admin;
+namespace Contributor\Admin;
 
 /**
  * Admin related settings

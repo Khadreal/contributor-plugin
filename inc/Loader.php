@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Contributor;
 
-use Contributor\Inc\Admin\Admin;
+use Contributor\Admin\Admin;
 
 class Loader {
     /**

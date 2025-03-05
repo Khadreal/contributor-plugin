@@ -18,7 +18,10 @@ defined( 'ABSPATH' ) || exit;
 
 //Define constant.
 define( 'RT_CONTRIBUTOR_FILE', __FILE__ );
-define( 'RT_TEMPLATE_PATH', realpath( plugin_dir_path( RT_CONTRIBUTOR_FILE ) ) . '/views' );
+define( 'RT_CONTRIBUTOR_PATH', realpath( plugin_dir_path( RT_CONTRIBUTOR_FILE ) ) . '/' );
+define( 'RT_CONTRIBUTOR_TEMPLATE_PATH', realpath( plugin_dir_path( RT_CONTRIBUTOR_FILE ) ) . '/views' );
+
+require_once RT_CONTRIBUTOR_PATH . 'inc/main.php';
 
 /**
  * Check requirements before installing/uninstalling process.

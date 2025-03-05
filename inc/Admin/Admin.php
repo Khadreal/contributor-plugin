@@ -82,7 +82,7 @@ class Admin {
      *
     */
     private function render_view( string $template, array $data = [] ) {
-        $template_path =  constant( 'RT_TEMPLATE_PATH' ) . '/' . $template . '.php';
+        $template_path =  constant( 'RT_CONTRIBUTOR_TEMPLATE_PATH' ) . '/' . $template . '.php';
 
         ob_start();
 

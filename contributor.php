@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Contributors
  * Plugin URI: https://khadreal.github.io
- * Description: Wordpress contributors plugin.
+ * Description: A WordPress contributors plugin that allows you to select multiple authors for your post.
  * Version: 1.0.0
  * Requires at least: 5.8
  * Requires PHP: 7.3
@@ -20,3 +20,14 @@ defined( 'ABSPATH' ) || exit;
 define( 'RT_CONTRIBUTOR_FILE', __FILE__ );
 define( 'RT_TEMPLATE_PATH', realpath( plugin_dir_path( RT_CONTRIBUTOR_FILE ) ) . '/views' );
 
+/**
+ * Check requirements before installing/uninstalling process.
+ *
+*/
+function rt_contributors_check_requirement() {
+
+}
+
+register_activation_hook( RT_CONTRIBUTOR_FILE, 'rt_contributors_check_requirement' );
+
+register_uninstall_hook( RT_CONTRIBUTOR_FILE, 'rt_contributors_check_requirement' );

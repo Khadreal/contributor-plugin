@@ -9,6 +9,11 @@
       "email": "opeyemi.khadri@gmail.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "Contributor\\": "inc/"
+    }
+  },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true

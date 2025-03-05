@@ -1,7 +1,16 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress" namespace="WordPressCS\WordPress" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
-​
 	<description>WordPress Coding Standards</description>
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<file>inc</file>
+	<file>views</file>
+	<file>uninstall.php</file>
+
+	<arg value="sp"/><!-- Show sniff and progress -->
+	<arg name="colors"/><!-- Show results with colors -->
+	<arg name="parallel" value="50"/><!-- Enables parallel processing when available for faster results. -->
+	<arg name="extensions" value="php"/><!-- Limit to PHP files -->
 
 	<rule ref="WordPress-Extra">
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
@@ -11,10 +20,10 @@
 		<exclude name="Generic.WhiteSpace.ScopeIndent"/>
 		<exclude name="WordPress.Arrays.ArrayIndentation"/>
 		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
-		<exclude name="WordPress.WhiteSpace.PrecisionAlignment"/>
+		<exclude name="Universal.WhiteSpace.PrecisionAlignment"/>
 		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing"/>
-		<exclude name="WordPress.Arrays.CommaAfterArrayItem"/>
-		<exclude name="WordPress.WhiteSpace.DisallowInlineTabs"/>
+
+		<exclude name="Universal.WhiteSpace.DisallowInlineTabs"/>
 		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
@@ -44,5 +53,14 @@
 		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+		<exclude name="Squiz.PHP.CommentedOutCode.Found"/>
+	</rule>
+
+	<rule ref="WordPress-Docs">
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
 	</rule>
 </ruleset>

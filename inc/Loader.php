@@ -9,7 +9,7 @@ class Loader {
     /**
      * Initialize
      */
-    public function init() : void {
+    public function init(): void {
         $this->load_components();
     }
 
@@ -18,7 +18,7 @@ class Loader {
      *
      * @return void
      */
-    private function load_components() : void{
+    private function load_components(): void {
         ( new Admin() )->register_callbacks();
     }
 }

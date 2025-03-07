@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-$data = isset( $data ) ? $data : [];
+$data = isset( $data ) ? $data : array();
 ?>
 
 <ul style="margin:0; padding:0; list-style:none;">

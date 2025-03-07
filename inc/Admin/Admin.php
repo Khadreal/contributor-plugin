@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace Contributor\Admin;
 
+use Contributor\AbstractRender;
+
 /**
  * Admin related settings
  */
-class Admin {
+class Admin extends AbstractRender {
 
     /**
      * Register callbacks.
      *
      * @return void
-    */
+     */
     public function register_callbacks(): void {
         add_action( 'add_meta_boxes', array( $this, 'action_add_contributors_meta' ) );
         add_action( 'save_post', array( $this, 'action_save_contributors' ) );
@@ -34,21 +36,28 @@ class Admin {
 
     /**
      * Metabox rendering
+     *
+     * @param mixed $post Post data.
+     *
+     * @return void
      */
-    public function rt_render_contributors_metabox( $post ) {
+    public function rt_render_contributors_metabox( $post ): void {
         $users = get_users( array( 'role__in' => array( 'administrator', 'editor', 'author' ) ) );
         $selected_contributors = get_post_meta( $post->ID, '_rt_contributors', true ) ?: array();
 
         wp_nonce_field( 'rt_save_contributors', 'rt_contributors_nonce');
 
-        echo $this->render_view( 'contributors', array(
+        $data = array(
             'users' => $users,
-            'selected_contributors' => $selected_contributors
-        ) );
+            'selected_contributors' => $selected_contributors,
+        );
+
+        echo $this->render_view( 'contributors-meta-box', $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     /**
      * Save contributors
+     *
      * @param int $post_id Post ID.
      *
      * @return void
@@ -71,23 +80,5 @@ class Admin {
         $contributors = isset( $_POST['rt_contributors'] ) ? array_map('intval', $_POST['rt_contributors']) : array();
 
         update_post_meta( $post_id, '_rt_contributors', $contributors );
-    }
-
-    /**
-     * Render view
-     *
-     * @param string $template Template slug.
-     * @param array $data Data to pass to the template.
-     *
-     *
-    */
-    private function render_view( string $template, array $data = [] ) {
-        $template_path =  constant( 'RT_CONTRIBUTOR_TEMPLATE_PATH' ) . '/' . $template . '.php';
-
-        ob_start();
-
-        include $template_path;
-
-        return trim( ob_get_clean() );
     }
 }

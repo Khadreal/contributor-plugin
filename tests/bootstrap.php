@@ -24,4 +24,4 @@ tests_add_filter( 'muplugins_loaded', function() {
 } );
 
 // Start up the WP testing environment.
-require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
+require $test_dir . '/includes/bootstrap.php';

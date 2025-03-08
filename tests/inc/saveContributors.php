@@ -20,13 +20,6 @@ class Test_SaveContributors extends WP_UnitTestCase {
             'post_title' => 'Test Post',
             'post_status' => 'publish'
         ]);
-
-        // Set up current user with edit_post capability
-        $user_id = $this->factory->user->create([
-            'role' => 'administrator',
-        ]);
-
-        wp_set_current_user($user_id);
     }
 
     /**
@@ -38,25 +31,75 @@ class Test_SaveContributors extends WP_UnitTestCase {
         parent::tearDown();
     }
 
-    public function testShouldReturnAsExpected() {
-        $contributor1 = $this->factory->user->create();
-        $contributor2 = $this->factory->user->create();
+    /**
+     * @dataProvider configTestData
+    */
+    public function testShouldReturnAsExpected( $config, $expected) {
+        $user_id = $this->factory->user->create([
+            'role' => $config['user_role'],
+        ]);
 
-        $_POST['rt_contributors'] = array($contributor1, $contributor2);
+        $this->test_user_ids[] = $user_id;
+        wp_set_current_user($user_id);
 
-        // Create and set nonce
-        $_POST['rt_contributors_nonce'] = wp_create_nonce('rt_save_contributors');
+        // Create contributor users if needed.
+        $contributor_ids = [];
+        for ($i = 0; $i < $config['contributor_count']; $i++) {
+            $contributor_id = $this->factory->user->create();
+            $this->test_user_ids[] = $contributor_id;
+            $contributor_ids[] = $contributor_id;
+        }
 
-        // Call the method
+        if ( ! empty( $contributor_ids ) ) {
+            $_POST['rt_contributors'] = $contributor_ids;
+        }
+
+        $_POST['rt_contributors_nonce'] = 'invalid_nonce';
+        if ( $config['valid_nonce'] ) {
+            $_POST['rt_contributors_nonce'] = wp_create_nonce('rt_save_contributors');
+        }
+
         $this->controller->action_save_contributors( $this->post_id );
 
-        // Get the saved contributors
         $saved_contributors = get_post_meta( $this->post_id, '_rt_contributors', true );
+        $expected_count = $expected['saved_count'] ?? count( $contributor_ids );
+        if ( $expected['should_save'] ) {
+            $this->assertIsArray( $saved_contributors  );
+            $this->assertCount( $expected_count, $saved_contributors );
 
-        // Assert that the contributors were saved correctly
-        $this->assertIsArray($saved_contributors);
-        $this->assertCount(2, $saved_contributors);
-        $this->assertContains($contributor1, $saved_contributors);
-        $this->assertContains($contributor2, $saved_contributors);
+
+            if ( $expected_count > 0 ) {
+                foreach ($contributor_ids as $contributor_id) {
+                    $this->assertContains( $contributor_id, $saved_contributors );
+                }
+            }
+        } else {
+            $this->assertEmpty( $saved_contributors );
+        }
+    }
+
+    public function configTestData() {
+        $filename = __FILE__;
+
+        return $this->getTestData( dirname( $filename ), basename( $filename, '.php' ) );
+    }
+
+    /**
+     * @param string $dir Test directory
+     * @param string $filename Filename
+     *
+    */
+    private function getTestData( $dir, $filename ) {
+        if ( empty( $dir ) || empty( $filename ) ) {
+            return [];
+        }
+
+        $dir = str_replace( 'inc', 'data', $dir );
+        $dir = rtrim( $dir, '\\/' );
+        $test_data = "$dir/{$filename}.php";
+
+        return is_readable( $test_data )
+            ? require $test_data
+            : [];
     }
 }

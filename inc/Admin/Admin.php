@@ -63,8 +63,8 @@ class Admin extends AbstractRender {
      * @return void
      */
     public function action_save_contributors( int $post_id ): void {
-        if ( ! isset( $_POST[ 'pc_contributors_nonce' ] )
-            || ! wp_verify_nonce( $_POST['pc_contributors_nonce'], 'rt_save_contributors' )
+        if ( ! isset( $_POST[ 'rt_contributors_nonce' ] )
+            || ! wp_verify_nonce( $_POST['rt_contributors_nonce'], 'rt_save_contributors' )
         ) {
             return;
         }

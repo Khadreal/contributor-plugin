@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Contributor;
 
 use Contributor\Admin\Admin;
+use Contributor\Frontend\Controller;
 
 class Loader {
     /**
@@ -20,5 +21,6 @@ class Loader {
      */
     private function load_components(): void {
         ( new Admin() )->register_callbacks();
+        ( new Controller() )->register_callbacks();
     }
 }

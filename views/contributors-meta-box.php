@@ -10,7 +10,7 @@ $data = isset( $data ) ? $data : array();
     ?>
     <li>
         <label>
-            <input type="checkbox" name="rt_contributors[]" value="<?php esc_attr( $user->ID ); ?>" <?php esc_attr( $checked ); ?> >
+            <input type="checkbox" name="rt_contributors[]" value="<?php echo esc_attr( $user->ID ); ?>" <?php echo esc_attr( $checked ); ?> >
             <?php echo esc_html($user->display_name); ?>
         </label>
     </li>

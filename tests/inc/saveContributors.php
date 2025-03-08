@@ -57,10 +57,7 @@ class Test_SaveContributors extends TestCase {
             $_POST['rt_contributors'] = $contributor_ids;
         }
 
-        $_POST['rt_contributors_nonce'] = 'invalid_nonce';
-        if ( $config['valid_nonce'] ) {
-            $_POST['rt_contributors_nonce'] = wp_create_nonce('rt_save_contributors');
-        }
+        $_POST['rt_contributors_nonce'] = wp_create_nonce( $config['nonce'] );
 
         $this->post_id = $this->factory->post->create( $config['post'] );
 

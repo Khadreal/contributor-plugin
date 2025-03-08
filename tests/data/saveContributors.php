@@ -3,7 +3,7 @@ return [
     'testShouldSaveValidContributorsData' => [
         'config' => [
             'contributor_count' => 2,
-            'valid_nonce' => true,
+            'nonce' => 'rt_save_contributors',
             'user_role' => 'administrator',
             'post'  => [
                 'post_title' => 'Test Post',
@@ -18,7 +18,7 @@ return [
     'testEditorShouldSaveValidContributorsData' => [
         'config' => [
             'contributor_count' => 3,
-            'valid_nonce' => true,
+            'nonce' => 'rt_save_contributors',
             'user_role' => 'editor',
             'post'  => [
                 'post_title' => 'Test Post',
@@ -33,7 +33,7 @@ return [
     'testShouldNotSaveWhenInvalidNonce' => [
         'config' => [
             'contributor_count' => 1,
-            'valid_nonce' => false,
+            'nonce' => 'invalid_nonce',
             'user_role' => 'administrator',
             'post'  => [
                 'post_title' => 'Another Post',
@@ -42,6 +42,36 @@ return [
         ],
         'expected' => [
             'should_save' => false,
+            'saved_count' => 0,
+        ]
+    ],
+    'testShouldNotSaveWhenUserDoesNotHavePermission' => [
+        'config' => [
+            'contributor_count' => 1,
+            'nonce' => 'rt_save_contributors',
+            'user_role' => 'subscriber',
+            'post'  => [
+                'post_title' => 'Another Post',
+                'post_status' => 'publish'
+            ]
+        ],
+        'expected' => [
+            'should_save' => false,
+            'saved_count' => 0,
+        ]
+    ],
+    'testShouldNotSaveWhenNoContributorIsSelected' => [
+        'config' => [
+            'contributor_count' => 0,
+            'nonce' => 'rt_save_contributors',
+            'user_role' => 'administrator',
+            'post'  => [
+                'post_title' => 'Another Post',
+                'post_status' => 'publish'
+            ]
+        ],
+        'expected' => [
+            'should_save' => true,
             'saved_count' => 0,
         ]
     ],

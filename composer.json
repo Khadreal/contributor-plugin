@@ -32,6 +32,7 @@
   },
   "scripts": {
     "phpcs": "phpcs --basepath=.",
-    "phpcs:fix": "phpcbf"
+    "phpcs:fix": "phpcbf",
+    "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always --configuration tests/phpunit.xml.dist"
   }
 }

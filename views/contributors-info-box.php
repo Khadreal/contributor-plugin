@@ -2,15 +2,19 @@
 defined( 'ABSPATH' ) || exit;
 
 $data = isset( $data ) ? $data : array();
+error_log(print_r($data['contributors'], true));
 ?>
 
-<div class="pc-contributors-box" style="border:1px solid #ddd; padding:10px; margin-top:20px;">
+<div class="rt-contributors-box" style="border:1px solid #ddd; padding:10px; margin-top:20px;">
     <h4><?php esc_html_e( 'Contributors', 'rt-contributors' ); ?></h4>
-    <?php foreach ( $data['contributors'] as $contributor_id ) :
-        $user_info = get_userdata( $contributor_id );
-        $avatar = get_avatar( $contributor_id, 32 );
-        $author_link = get_author_posts_url( $contributor_id );
+    <?php foreach ( $data['contributors'] as $contributor ) :
     ?>
+        <li>
+            <?php echo $contributor['avatar']; ?>
+            <a href="<?php echo $contributor['url']; ?>">
+                <?php echo $contributor['name']; ?>
+            </a>
+        </li>
 
     <?php endforeach; ?>
 </div>

@@ -3,13 +3,15 @@
 use Contributor\Admin\Admin;
 use Contributor\Frontend\Controller;
 
-class Test_SaveContributors extends WP_UnitTestCase {
+class Test_SaveContributors extends TestCase {
     /**
      * Test post ID
      */
     private $post_id;
 
     private $controller;
+
+    private $user_ids;
 
     public function setUp(): void {
         parent::setUp();
@@ -27,6 +29,12 @@ class Test_SaveContributors extends WP_UnitTestCase {
      */
     public function tearDown(): void {
         wp_delete_post($this->post_id, true);
+
+        foreach ($this->test_user_ids as $user_id) {
+            wp_delete_user($user_id);
+        }
+
+        $this->user_ids = [];
 
         parent::tearDown();
     }
@@ -76,30 +84,5 @@ class Test_SaveContributors extends WP_UnitTestCase {
         } else {
             $this->assertEmpty( $saved_contributors );
         }
-    }
-
-    public function configTestData() {
-        $filename = __FILE__;
-
-        return $this->getTestData( dirname( $filename ), basename( $filename, '.php' ) );
-    }
-
-    /**
-     * @param string $dir Test directory
-     * @param string $filename Filename
-     *
-    */
-    private function getTestData( $dir, $filename ) {
-        if ( empty( $dir ) || empty( $filename ) ) {
-            return [];
-        }
-
-        $dir = str_replace( 'inc', 'data', $dir );
-        $dir = rtrim( $dir, '\\/' );
-        $test_data = "$dir/{$filename}.php";
-
-        return is_readable( $test_data )
-            ? require $test_data
-            : [];
     }
 }

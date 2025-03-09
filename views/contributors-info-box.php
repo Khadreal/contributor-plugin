@@ -2,7 +2,6 @@
 defined( 'ABSPATH' ) || exit;
 
 $data = isset( $data ) ? $data : array();
-error_log(print_r($data['contributors'], true));
 ?>
 
 <div class="rt-contributors-box" style="border:1px solid #ddd; padding:10px; margin-top:20px;">
@@ -10,9 +9,9 @@ error_log(print_r($data['contributors'], true));
     <?php foreach ( $data['contributors'] as $contributor ) :
     ?>
         <li>
-            <?php echo $contributor['avatar']; ?>
-            <a href="<?php echo $contributor['url']; ?>">
-                <?php echo $contributor['name']; ?>
+            <?php echo esc_html( $contributor['avatar'] ); ?>
+            <a href="<?php echo esc_url( $contributor['url'] ); ?>">
+                <?php echo esc_html( $contributor['name'] ); ?>
             </a>
         </li>
 

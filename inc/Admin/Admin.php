@@ -43,7 +43,7 @@ class Admin extends AbstractRender {
      */
     public function rt_render_contributors_metabox( $post ): void {
         $users = get_users( array( 'role__in' => array( 'administrator', 'editor', 'author' ) ) );
-        $selected_contributors = get_post_meta( $post->ID, '_rt_contributors', true ) ?: array();
+        $selected_contributors = get_post_meta( $post->ID, '_rt_contributors', true ) ?? array();
 
         wp_nonce_field( 'rt_save_contributors', 'rt_contributors_nonce');
 

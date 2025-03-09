@@ -37,8 +37,8 @@ class Controller extends AbstractRender {
             $user = get_userdata( $contributor_id );
             if ( $user ) {
                 $contributors_data[] = array(
-                    'name' => esc_html( $user->display_name ),
-                    'url'  => esc_url( get_author_posts_url( $contributor_id ) ),
+                    'name' => $user->display_name,
+                    'url'  => get_author_posts_url( $contributor_id ),
                     'avatar' => get_avatar( $contributor_id, 32 ),
                 );
             }

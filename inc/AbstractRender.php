@@ -11,7 +11,7 @@ abstract class AbstractRender {
      * @param string $template Template slug.
      * @param array  $data Data to pass to the template.
      */
-    public function render_view( string $template, array $data = array() ) {
+    public function render_view( string $template, array $data = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
         $template_path =  constant( 'RT_CONTRIBUTOR_TEMPLATE_PATH' ) . '/' . $template . '.php';
 
         ob_start();

@@ -9,7 +9,7 @@ $data = isset( $data ) ? $data : array();
     <?php foreach ( $data['contributors'] as $contributor ) :
     ?>
         <li>
-            <?php echo esc_html( $contributor['avatar'] ); ?>
+            <?php echo wp_kses_post( $contributor['avatar'] ); ?>
             <a href="<?php echo esc_url( $contributor['url'] ); ?>">
                 <?php echo esc_html( $contributor['name'] ); ?>
             </a>

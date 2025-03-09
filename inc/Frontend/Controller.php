@@ -22,7 +22,7 @@ class Controller extends AbstractRender {
      */
     public function filter_display_post_contributors( string $content ) {
         // Bail early if it's not a single page.
-        if ( ! is_single() ) {
+        if ( ! is_singular( ['post', 'page'] ) ) {
             return $content;
         }
 

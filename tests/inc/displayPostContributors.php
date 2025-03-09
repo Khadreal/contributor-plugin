@@ -28,7 +28,7 @@ class Test_DisplayPostContributors extends TestCase {
      * @dataProvider configTestData
      */
     public function testShouldReturnAsExpected( $config, $expected ) {
-        Functions\when('is_single')->justReturn( $config['is_single'] );
+        Functions\when('is_singular')->justReturn( $config['is_single'] );
 
         if( $config['is_single'] ) {
             Functions\when('get_the_ID')->justReturn( $config['post_id'] );

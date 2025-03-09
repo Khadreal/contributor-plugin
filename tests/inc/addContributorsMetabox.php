@@ -23,7 +23,7 @@ class Test_AddContributorsMetaBox extends TestCase {
                 'rt_contributors_metabox',
                 'Contributors',
                 [ $this->admin, 'rt_render_contributors_metabox' ],
-                'post',
+                ['post', 'page'],
                 'side',
                 'default'
             );

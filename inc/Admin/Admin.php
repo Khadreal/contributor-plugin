@@ -28,7 +28,7 @@ class Admin extends AbstractRender {
             'rt_contributors_metabox',
             'Contributors',
             array( $this, 'rt_render_contributors_metabox' ),
-            'post',
+            ['post', 'page'],
             'side',
             'default'
         );

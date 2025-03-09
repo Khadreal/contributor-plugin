@@ -12,7 +12,7 @@ The ** Contributors** plugin allows multiple authors to be assigned to a post an
 
 
 ## 🛠️ Usage
-1. Edit a post in WordPress.
+1. Edit a post/page in WordPress.
 2. In the **Contributors** meta box, select the users to be listed as contributors.
 3. Save the post. The contributors will be displayed at the end of the post.
 
@@ -34,7 +34,6 @@ composer test-unit
 
 ## ✅ TODO
 - Ensure contributor content appears on their **author archive pages**.
-- Add support for pages
 - Improve styling for the contributor section.
 - Add more filters for customization.
 

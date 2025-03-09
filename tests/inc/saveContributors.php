@@ -1,17 +1,11 @@
 <?php
+namespace Contributor\Tests\Inc;
 
 use Contributor\Admin\Admin;
-use Contributor\Frontend\Controller;
+use Brain\Monkey\Functions;
 
 class Test_SaveContributors extends TestCase {
-    /**
-     * Test post ID
-     */
-    private $post_id;
-
     private $controller;
-
-    private $user_ids;
 
     public function setUp(): void {
         parent::setUp();
@@ -20,63 +14,34 @@ class Test_SaveContributors extends TestCase {
     }
 
     /**
-     * Clean up after tests
-     */
-    public function tearDown(): void {
-        wp_delete_post( $this->post_id, true );
-
-        foreach ($this->user_ids as $user_id) {
-            wp_delete_user( $user_id );
-        }
-
-        $this->user_ids = [];
-
-        parent::tearDown();
-    }
-
-    /**
      * @dataProvider configTestData
     */
-    public function testShouldReturnAsExpected( $config, $expected) {
-        $user_id = $this->factory->user->create([
-            'role' => $config['user_role'],
-        ]);
+    public function testShouldReturnAsExpected( $config, $expected ) {
+        $_POST['rt_contributors_nonce'] = $config['nonce_value'];
+        $_POST['rt_contributors'] = $config[ 'contributors' ];
 
-        $this->user_ids[] = $user_id;
-        wp_set_current_user( $user_id );
+        Functions\expect( 'wp_verify_nonce' )
+            ->once()
+            ->with( $config['nonce_value'], 'rt_save_contributors' )
+            ->andReturn( $config['nonce'] );
 
-        // Create contributor users if needed.
-        $contributor_ids = [];
-        for ($i = 0; $i < $config['contributor_count']; $i++) {
-            $contributor_id = $this->factory->user->create();
-            $this->user_ids[] = $contributor_id;
-            $contributor_ids[] = $contributor_id;
+        if( $config['nonce'] ) {
+            Functions\expect('current_user_can')
+                ->once()
+                ->with('edit_post', $config['post'] )
+                ->andReturn( $config['current_user'] );
         }
 
-        if ( ! empty( $contributor_ids ) ) {
-            $_POST['rt_contributors'] = $contributor_ids;
-        }
-
-        $_POST['rt_contributors_nonce'] = wp_create_nonce( $config['nonce'] );
-
-        $this->post_id = $this->factory->post->create( $config['post'] );
-
-        $this->controller->action_save_contributors( $this->post_id );
-
-        $saved_contributors = get_post_meta( $this->post_id, '_rt_contributors', true );
-        $expected_count = $expected['saved_count'];
-
-        if ( $expected['should_save'] ) {
-            $this->assertIsArray( $saved_contributors  );
-            $this->assertCount( $expected_count, $saved_contributors );
-
-            if ( $expected_count > 0 ) {
-                foreach ( $contributor_ids as $contributor_id ) {
-                    $this->assertContains( $contributor_id, $saved_contributors );
-                }
-            }
+        if( $expected ) {
+            Functions\expect('update_post_meta')
+                ->once()
+                ->with($config['post'], '_rt_contributors', $config[ 'contributors' ] );
         } else {
-            $this->assertEmpty( $saved_contributors );
+            Functions\expect('update_post_meta')->never();
         }
+
+        $this->controller->action_save_contributors( $config['post'] );
+
+        $this->assertTrue(true);
     }
 }

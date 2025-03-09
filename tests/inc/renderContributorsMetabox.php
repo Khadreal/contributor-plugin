@@ -14,7 +14,6 @@ class Test_RenderContributorsMetabox extends TestCase {
 
     public function setUp(): void {
         parent::setUp();
-        Monkey\setUp();
 
         $this->admin = Mockery::mock(
             Admin::class . '[render_view]'

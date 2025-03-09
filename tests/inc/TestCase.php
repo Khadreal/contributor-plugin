@@ -12,6 +12,12 @@ abstract class TestCase extends BaseTest {
         Monkey\setUp();
     }
 
+    protected function tearDown(): void {
+        parent::tearDown();
+
+        Monkey\tearDown();
+    }
+
     public function configTestData() {
         $obj      = new ReflectionObject( $this );
         $filename = $obj->getFileName();

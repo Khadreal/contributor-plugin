@@ -2,77 +2,52 @@
 return [
     'testShouldSaveValidContributorsData' => [
         'config' => [
-            'contributor_count' => 2,
-            'nonce' => 'rt_save_contributors',
-            'user_role' => 'administrator',
-            'post'  => [
-                'post_title' => 'Test Post',
-                'post_status' => 'publish'
-            ]
+            'contributors' =>  [ 1, 2, 3 ],
+            'nonce' => true,
+            'nonce_value' => 'rt_save_contributors',
+            'current_user' => true,
+            'post'  => 20
         ],
-        'expected' => [
-            'should_save' => true,
-            'saved_count' => 2,
-        ]
+        'expected' => true
     ],
     'testEditorShouldSaveValidContributorsData' => [
         'config' => [
-            'contributor_count' => 3,
-            'nonce' => 'rt_save_contributors',
-            'user_role' => 'editor',
-            'post'  => [
-                'post_title' => 'Test Post',
-                'post_status' => 'publish'
-            ]
+            'contributors' =>  [ 1, 2, 3 ],
+            'nonce' => true,
+            'nonce_value' => 'rt_save_contributors',
+            'current_user' => true,
+            'post'  => 201
         ],
-        'expected' => [
-            'should_save' => true,
-            'saved_count' => 3,
-        ]
+        'expected' => true
     ],
     'testShouldNotSaveWhenInvalidNonce' => [
         'config' => [
-            'contributor_count' => 1,
-            'nonce' => 'invalid_nonce',
-            'user_role' => 'administrator',
-            'post'  => [
-                'post_title' => 'Another Post',
-                'post_status' => 'publish'
-            ]
+            'contributors' => [ 100 ],
+            'nonce' => false,
+            'nonce_value' => 'invalid_nonce',
+            'current_user' => true,
+            'post'  => 100
         ],
-        'expected' => [
-            'should_save' => false,
-            'saved_count' => 0,
-        ]
+        'expected' => false
     ],
     'testShouldNotSaveWhenUserDoesNotHavePermission' => [
         'config' => [
-            'contributor_count' => 1,
-            'nonce' => 'rt_save_contributors',
-            'user_role' => 'subscriber',
-            'post'  => [
-                'post_title' => 'Another Post',
-                'post_status' => 'publish'
-            ]
+            'contributors' => [ 100 ],
+            'nonce' => true,
+            'nonce_value' => 'rt_save_contributors',
+            'current_user' => false,
+            'post'  => 20
         ],
-        'expected' => [
-            'should_save' => false,
-            'saved_count' => 0,
-        ]
+        'expected' => false
     ],
     'testShouldNotSaveWhenNoContributorIsSelected' => [
         'config' => [
-            'contributor_count' => 0,
-            'nonce' => 'rt_save_contributors',
-            'user_role' => 'administrator',
-            'post'  => [
-                'post_title' => 'Another Post',
-                'post_status' => 'publish'
-            ]
+            'contributors' => [],
+            'nonce' => true,
+            'nonce_value' => 'rt_save_contributors',
+            'current_user' => true,
+            'post'  => 20
         ],
-        'expected' => [
-            'should_save' => true,
-            'saved_count' => 0,
-        ]
+        'expected' => true
     ],
 ];

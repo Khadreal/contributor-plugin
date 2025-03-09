@@ -1,8 +1,35 @@
 <?php
+namespace Contributor\Tests\Inc;
 
-class Test_AddContributorsMetaBox {
+use Contributor\Admin\Admin;
+use Brain\Monkey\Functions;
 
-    public function testShouldReturnExpected() {
+class Test_AddContributorsMetaBox extends TestCase {
+    private $admin;
 
+    public function setUp(): void {
+        parent::setUp();
+
+        $this->admin = $this->getMockBuilder(Admin::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['rt_render_contributors_metabox'])
+            ->getMock();
+    }
+
+    public function testShouldReturnAsExpected() {
+        Functions\expect('add_meta_box')
+            ->once()
+            ->with(
+                'rt_contributors_metabox',
+                'Contributors',
+                [ $this->admin, 'rt_render_contributors_metabox' ],
+                'post',
+                'side',
+                'default'
+            );
+
+        $this->admin->action_add_contributors_meta();
+
+        $this->assertTrue( true );
     }
 }

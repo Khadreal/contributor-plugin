@@ -1,6 +1,17 @@
 <?php
+namespace Contributor\Tests\Inc;
 
-abstract class TestCase extends WP_UnitTestCase{
+use PHPUnit\Framework\TestCase as BaseTest;
+use Brain\Monkey;
+use ReflectionObject;
+
+abstract class TestCase extends BaseTest {
+    protected function setUp(): void {
+        parent::setUp();
+
+        Monkey\setUp();
+    }
+
     public function configTestData() {
         $obj      = new ReflectionObject( $this );
         $filename = $obj->getFileName();

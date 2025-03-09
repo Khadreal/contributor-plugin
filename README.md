@@ -29,6 +29,9 @@ Execute the tests using:
 composer test-unit
 ```
 
+## Test site
+-- http://165.232.117.191/wp/
+
 ## ✅ TODO
 - Ensure contributor content appears on their **author archive pages**.
 - Add support for pages

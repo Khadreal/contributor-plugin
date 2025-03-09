@@ -26,7 +26,7 @@ composer install
 ### 2. Run PHPUnit Tests
 Execute the tests using:
 ```sh
-vendor/bin/phpunit
+composer test-unit
 ```
 
 ## ✅ TODO
